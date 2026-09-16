@@ -1,0 +1,192 @@
+# Moroccan public holidays -- the source of truth for this application.
+#
+# Edited by hand, reviewed like code. Two sections, because the two kinds of
+# holiday have genuinely different epistemics:
+#
+#   fixed  Same Gregorian date every year. Certain. Expanded for any year.
+#   hijri  Lunar. Listed per year, because the date moves ~11 days earlier
+#          annually AND is fixed officially only by moon sighting, announced
+#          by the Ministry of Habous and Islamic Affairs days in advance.
+#
+# !! The hijri dates below are ASTRONOMICAL ESTIMATES and carry
+#    `is_confirmed: false`. Once Morocco announces the real date, correct the
+#    entry and flip the flag -- that is a one-line PR, which is exactly why
+#    this data lives in YAML and not in a migration.
+
+country: MA
+weekend: [saturday, sunday]
+
+fixed:
+  - slug: new-year
+    month: 1
+    day: 1
+    name: New Year's Day
+    name_fr: Jour de l'An
+    name_ar: رأس السنة الميلادية
+
+  - slug: independence-manifesto
+    month: 1
+    day: 11
+    name: Proclamation of Independence
+    name_fr: Manifeste de l'Indépendance
+    name_ar: ذكرى تقديم وثيقة الاستقلال
+
+  - slug: amazigh-new-year
+    month: 1
+    day: 14
+    name: Amazigh New Year
+    name_fr: Nouvel An Amazigh
+    name_ar: رأس السنة الأمازيغية
+    since: 2024  # declared a public holiday by royal decree in May 2023
+
+  - slug: labour-day
+    month: 5
+    day: 1
+    name: Labour Day
+    name_fr: Fête du Travail
+    name_ar: عيد الشغل
+
+  - slug: throne-day
+    month: 7
+    day: 30
+    name: Throne Day
+    name_fr: Fête du Trône
+    name_ar: عيد العرش
+
+  - slug: oued-eddahab
+    month: 8
+    day: 14
+    name: Oued Ed-Dahab Allegiance Day
+    name_fr: Allégeance Oued Ed-Dahab
+    name_ar: ذكرى استرجاع إقليم وادي الذهب
+
+  - slug: revolution-king-people
+    month: 8
+    day: 20
+    name: Revolution of the King and the People
+    name_fr: Révolution du Roi et du Peuple
+    name_ar: ذكرى ثورة الملك والشعب
+
+  - slug: youth-day
+    month: 8
+    day: 21
+    name: Youth Day
+    name_fr: Fête de la Jeunesse
+    name_ar: عيد الشباب
+
+  - slug: green-march
+    month: 11
+    day: 6
+    name: Green March Day
+    name_fr: Marche Verte
+    name_ar: ذكرى المسيرة الخضراء
+
+  - slug: independence-day
+    month: 11
+    day: 18
+    name: Independence Day
+    name_fr: Fête de l'Indépendance
+    name_ar: عيد الاستقلال
+
+hijri:
+  2026:
+    - slug: eid-al-fitr-1
+      date: 2026-03-20
+      name: Eid al-Fitr (day 1)
+      name_fr: Aïd al-Fitr (1er jour)
+      name_ar: عيد الفطر
+      is_confirmed: false
+      uncertainty_days: 1
+    - slug: eid-al-fitr-2
+      date: 2026-03-21
+      name: Eid al-Fitr (day 2)
+      name_fr: Aïd al-Fitr (2e jour)
+      name_ar: عيد الفطر
+      is_confirmed: false
+      uncertainty_days: 1
+    - slug: eid-al-adha-1
+      date: 2026-05-27
+      name: Eid al-Adha (day 1)
+      name_fr: Aïd al-Adha (1er jour)
+      name_ar: عيد الأضحى
+      is_confirmed: false
+      uncertainty_days: 1
+    - slug: eid-al-adha-2
+      date: 2026-05-28
+      name: Eid al-Adha (day 2)
+      name_fr: Aïd al-Adha (2e jour)
+      name_ar: عيد الأضحى
+      is_confirmed: false
+      uncertainty_days: 1
+    - slug: fatih-muharram
+      date: 2026-06-16
+      name: Fatih Muharram (Islamic New Year)
+      name_fr: 1er Moharram (Nouvel An Hégirien)
+      name_ar: فاتح محرم
+      is_confirmed: false
+      uncertainty_days: 1
+    - slug: mawlid-1
+      date: 2026-08-25
+      name: Aid Al Mawlid (day 1)
+      name_fr: Aïd Al Mawlid (1er jour)
+      name_ar: عيد المولد النبوي
+      is_confirmed: false
+      uncertainty_days: 1
+    - slug: mawlid-2
+      date: 2026-08-26
+      name: Aid Al Mawlid (day 2)
+      name_fr: Aïd Al Mawlid (2e jour)
+      name_ar: عيد المولد النبوي
+      is_confirmed: false
+      uncertainty_days: 1
+
+  2027:
+    - slug: eid-al-fitr-1
+      date: 2027-03-10
+      name: Eid al-Fitr (day 1)
+      name_fr: Aïd al-Fitr (1er jour)
+      name_ar: عيد الفطر
+      is_confirmed: false
+      uncertainty_days: 1
+    - slug: eid-al-fitr-2
+      date: 2027-03-11
+      name: Eid al-Fitr (day 2)
+      name_fr: Aïd al-Fitr (2e jour)
+      name_ar: عيد الفطر
+      is_confirmed: false
+      uncertainty_days: 1
+    - slug: eid-al-adha-1
+      date: 2027-05-16
+      name: Eid al-Adha (day 1)
+      name_fr: Aïd al-Adha (1er jour)
+      name_ar: عيد الأضحى
+      is_confirmed: false
+      uncertainty_days: 1
+    - slug: eid-al-adha-2
+      date: 2027-05-17
+      name: Eid al-Adha (day 2)
+      name_fr: Aïd al-Adha (2e jour)
+      name_ar: عيد الأضحى
+      is_confirmed: false
+      uncertainty_days: 1
+    - slug: fatih-muharram
+      date: 2027-06-06
+      name: Fatih Muharram (Islamic New Year)
+      name_fr: 1er Moharram (Nouvel An Hégirien)
+      name_ar: فاتح محرم
+      is_confirmed: false
+      uncertainty_days: 1
+    - slug: mawlid-1
+      date: 2027-08-14
+      name: Aid Al Mawlid (day 1)
+      name_fr: Aïd Al Mawlid (1er jour)
+      name_ar: عيد المولد النبوي
+      is_confirmed: false
+      uncertainty_days: 1
+    - slug: mawlid-2
+      date: 2027-08-15
+      name: Aid Al Mawlid (day 2)
+      name_fr: Aïd Al Mawlid (2e jour)
+      name_ar: عيد المولد النبوي
+      is_confirmed: false
+      uncertainty_days: 1

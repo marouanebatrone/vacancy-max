@@ -1,5 +1,10 @@
-from django.urls import path
+from django.urls import URLPattern, URLResolver, path
+
+from .views import SupportedYearsView, YearOverviewView
 
 app_name = "calendars"
 
-urlpatterns: list[path] = []  # M1: /years/<year>/
+urlpatterns: list[URLPattern | URLResolver] = [
+    path("years/", SupportedYearsView.as_view(), name="supported-years"),
+    path("years/<int:year>/", YearOverviewView.as_view(), name="year-overview"),
+]

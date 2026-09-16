@@ -1,5 +1,5 @@
-from django.urls import path
+from django.urls import URLPattern, URLResolver
 
 app_name = "optimizer"
 
-urlpatterns: list[path] = []  # M3: POST /plan/
+urlpatterns: list[URLPattern | URLResolver] = []  # M3: POST /plan/
