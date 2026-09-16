@@ -51,13 +51,21 @@ class TestBuildCalendar:
 
 
 class TestCalendarInvariants:
-    def test_rejects_wrong_length(self) -> None:
-        with pytest.raises(ValueError, match="needs 365 days"):
-            Calendar(year=2026, days=(Day(dt.date(2026, 1, 1), DayType.WORKDAY),))
+    def test_build_calendar_always_covers_the_whole_year(self) -> None:
+        """Covering the year is build_calendar's promise. Calendar itself only
+        guarantees contiguity, so the solver can run on short spans in tests."""
+        assert build_calendar(2026, holidays={}).is_full_year is True
+
+    def test_rejects_empty(self) -> None:
+        with pytest.raises(ValueError, match="no days"):
+            Calendar(year=2026, days=())
+
+    def test_rejects_days_from_another_year(self) -> None:
+        with pytest.raises(ValueError, match="must all fall in 2026"):
+            Calendar(year=2026, days=(Day(dt.date(2025, 1, 1), DayType.WORKDAY),))
 
     def test_rejects_gaps(self) -> None:
         days = tuple(Day(d, DayType.WORKDAY) for d in iter_year(2026) if d != dt.date(2026, 6, 15))
-        days += (Day(dt.date(2027, 1, 1), DayType.WORKDAY),)
         with pytest.raises(ValueError, match="Gap in calendar"):
             Calendar(year=2026, days=days)
 

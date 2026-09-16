@@ -12,8 +12,11 @@ thousands of times in a test suite.
 | `types.py`      | `DayType`, `Day`, `Calendar`, `Break`, `Plan`                 |
 | `candidates.py` | enumerate every feasible break and its (cost, value)          |
 | `solver.py`     | pick the best non-overlapping subset under the leave budget   |
-| `strategies.py` | the objective: max total days off / longest break / spread    |
-| `metrics.py`    | days off, leave spent, efficiency ratio                       |
+| `strategies.py` | the objective: max total days off, or longest single break     |
+
+Days off, leave spent and efficiency are properties on `Break` and `Plan`
+rather than a separate metrics module: they are facts about those values, not
+a calculation anyone performs on them.
 
 ## `services.py` — the only bridge
 

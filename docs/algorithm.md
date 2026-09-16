@@ -32,21 +32,63 @@ Two transitions per state: skip day `d`, or take the candidate break ending at
 adjacent breaks are a single longer candidate already in the set). Complexity
 `O(days x B)` with `O(1)` work per candidate. Milliseconds for a full year.
 
-## Step 4 — strategies
+## Step 4 — anchor to holidays
 
-The objective is a parameter, not a hard-coded sum:
+Steps 1-3 solve the stated problem exactly, and the result is useless.
 
-- `MAX_DAYS_OFF` (default) — maximize total calendar days off
-- `LONGEST_BREAK` — favour one long holiday over several short ones
-- `SPREAD` — penalize clustering, aim for regular rest through the year
+Maximizing days off alone is degenerate: a lone Friday buys three days for one,
+the same ratio as most real bridges, and a year has fifty-two Fridays but only
+ten holidays. The true optimum for an 18-day budget is therefore *eighteen
+scattered three-day weekends*, bridging nothing. Mathematically perfect, and
+not what anyone asked for.
 
-## Invariants for property-based tests
+So a candidate is eligible only if the resulting break **contains a public
+holiday**. Anchoring is a property of the break, not of each day: a workday far
+from any holiday still qualifies when the whole stretch taken reaches one, which
+is just a longer holiday. Leave that buys no bridge goes unspent and is reported
+as `leave_unused`, staying the user's to take whenever they like.
 
-Hypothesis generates arbitrary calendars and budgets; these must always hold:
+With that one rule, 18 days in 2026 becomes 59 days off across 11 breaks, every
+one of them wrapped around a real holiday.
 
-1. Leave days used `<=` B
+## Step 5 — strategies
+
+The objective is a parameter, not a hard-coded sum. The DP never changes and
+stays exact for whichever scoring is chosen:
+
+- `MAX_DAYS_OFF` (default) — score = break length. Maximizes total days off.
+- `LONGEST_BREAK` — score = length². Convex, so concentrating always beats
+  spreading: one 10-day break scores 100 where two 5-day breaks score 50.
+
+A `SPREAD` strategy (rest distributed evenly through the year) is **not
+implemented**. It needs positional state in the DP rather than a per-break
+score, so it is deferred rather than faked.
+
+## Tie-breaking
+
+DP cells hold `(score, leave_left_over)`, so comparing the tuple gives the
+tie-break for free: among equally good plans, prefer the one that spends less
+leave. Getting 44 days off for 16 days beats getting them for 18.
+
+## How it is verified
+
+Three ways, in `tests/domain/test_solver.py`:
+
+**A brute-force oracle.** On small calendars, every subset of workdays is
+enumerated and the true maximum compared against the solver's answer, over 250
+generated cases. "Exact" is a strong claim and this is the only honest way to
+back it. Both mutations tried against it — letting breaks touch, and taking the
+first candidate greedily — are caught.
+
+**Hand-checked cases.** Small patterns with a known right answer.
+
+**Invariants**, property-tested with Hypothesis over random calendars:
+
+1. Leave days used ≤ budget
 2. Every chosen leave day is a workday
 3. No two returned breaks overlap or touch
-4. Value is monotone non-decreasing in `B`
-5. Efficiency ratio `>= 1` for every returned break
-6. `B = 0` returns an empty plan
+4. Value is monotone non-decreasing in the budget
+5. Efficiency ratio > 1 for every returned break
+6. Every break contains a public holiday
+7. Budget 0 returns an empty plan
+8. The same inputs always produce the same plan
