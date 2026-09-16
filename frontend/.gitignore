@@ -1,0 +1,4 @@
+node_modules/
+dist/
+*.local
+src/shared/api/schema.d.ts
