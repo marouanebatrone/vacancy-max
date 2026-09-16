@@ -44,10 +44,43 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/api/v1/optimizer/plan/': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /**
+     * Plan leave around the public holidays
+     * @description Turn a number of leave days into a year's worth of holidays.
+     */
+    post: operations['createPlan'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
 }
 export type webhooks = Record<string, never>;
 export interface components {
   schemas: {
+    Break: {
+      /** Format: date */
+      readonly start: string;
+      /** Format: date */
+      readonly end: string;
+      readonly total_days: number;
+      readonly cost: number;
+      /** Format: double */
+      readonly efficiency: number;
+      readonly leave_days: string[];
+      readonly holidays: components['schemas']['HolidayRef'][];
+      readonly has_estimated_holidays: boolean;
+    };
     Holiday: {
       /** Format: date */
       readonly date: string;
@@ -60,10 +93,64 @@ export interface components {
       readonly uncertainty_days: number;
       readonly is_observed: boolean;
     };
+    HolidayRef: {
+      /** Format: date */
+      readonly date: string;
+      readonly name: string;
+      readonly is_confirmed: boolean;
+    };
+    Plan: {
+      readonly year: number;
+      readonly budget: number;
+      readonly strategy: string;
+      readonly summary: components['schemas']['PlanSummary'];
+      readonly breaks: components['schemas']['Break'][];
+    };
+    PlanRequestRequest: {
+      /** @description Paid leave days the company grants. The only thing the user is asked. */
+      days: number;
+      /**
+       * @description Optional. Defaults to the year the user most likely wants to plan.
+       *
+       *     * `2026` - 2026
+       *     * `2027` - 2027
+       */
+      year?: components['schemas']['YearEnum'];
+      /**
+       * @description What 'best' means: most total days off, or one longest break.
+       *
+       *     * `max_days_off` - max_days_off
+       *     * `longest_break` - longest_break
+       * @default max_days_off
+       */
+      strategy: components['schemas']['StrategyEnum'];
+    };
+    PlanSummary: {
+      readonly total_days_off: number;
+      readonly leave_used: number;
+      readonly leave_unused: number;
+      /** Format: double */
+      readonly efficiency: number;
+      readonly break_count: number;
+      readonly longest_break: number;
+      readonly has_estimated_holidays: boolean;
+    };
+    /**
+     * @description * `max_days_off` - max_days_off
+     *     * `longest_break` - longest_break
+     * @enum {string}
+     */
+    StrategyEnum: 'max_days_off' | 'longest_break';
     SupportedYears: {
       readonly years: number[];
       readonly default_year: number;
     };
+    /**
+     * @description * `2026` - 2026
+     *     * `2027` - 2027
+     * @enum {integer}
+     */
+    YearEnum: 2026 | 2027;
     YearOverview: {
       readonly year: number;
       readonly weekend: string[];
@@ -123,6 +210,31 @@ export interface operations {
         };
         content: {
           'application/json': components['schemas']['YearOverview'];
+        };
+      };
+    };
+  };
+  createPlan: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['PlanRequestRequest'];
+        'application/x-www-form-urlencoded': components['schemas']['PlanRequestRequest'];
+        'multipart/form-data': components['schemas']['PlanRequestRequest'];
+      };
+    };
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['Plan'];
         };
       };
     };
