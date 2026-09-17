@@ -123,7 +123,7 @@ export interface components {
        *     * `longest_break` - longest_break
        * @default max_days_off
        */
-      strategy: components['schemas']['StrategyEnum'];
+      strategy?: components['schemas']['StrategyEnum'];
     };
     PlanSummary: {
       readonly total_days_off: number;

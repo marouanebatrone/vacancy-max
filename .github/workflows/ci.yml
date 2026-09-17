@@ -63,7 +63,9 @@ jobs:
           DJANGO_SETTINGS_MODULE: config.settings.test
       - run: npm ci
         working-directory: frontend
-      - run: npx openapi-typescript /tmp/schema.yaml -o src/shared/api/schema.d.ts
+      # --default-non-nullable false: a request field carrying a default is
+      # optional to send, and without the flag it is generated as required.
+      - run: npx openapi-typescript /tmp/schema.yaml --default-non-nullable false -o src/shared/api/schema.d.ts
         working-directory: frontend
       # Format identically to the committed file, so the diff below reports
       # real contract changes and never a whitespace difference.

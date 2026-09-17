@@ -12,7 +12,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "api:types": "openapi-typescript http://localhost:8000/api/schema/ -o src/shared/api/schema.d.ts && prettier --write src/shared/api/schema.d.ts"
+    "api:types": "openapi-typescript http://localhost:8000/api/schema/ --default-non-nullable false -o src/shared/api/schema.d.ts && prettier --write src/shared/api/schema.d.ts"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.66.0",
