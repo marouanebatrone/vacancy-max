@@ -1,0 +1,55 @@
+# Render blueprint: one API service, one static site.
+#
+# Split deliberately. On Render's free tier a web service sleeps after 15
+# minutes idle and takes ~50s to wake; a static site never sleeps. Keeping the
+# React app on the CDN means the page is always instant and only the first API
+# call pays the wake-up, behind a loading state the UI already shows.
+#
+# Deploy with: Render Dashboard -> New -> Blueprint -> pick this repo.
+
+services:
+  - type: web
+    name: vacancy-max-api
+    runtime: python
+    plan: free
+    region: frankfurt # closest of Render's regions to Morocco
+    rootDir: backend
+    buildCommand: |
+      pip install -r requirements.txt
+      python manage.py collectstatic --no-input
+      python manage.py migrate
+      python manage.py seed_holidays
+    startCommand: gunicorn config.wsgi:application --bind 0.0.0.0:$PORT --workers 2
+    healthCheckPath: /api/v1/calendars/years/
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.15
+      - key: DJANGO_SETTINGS_MODULE
+        value: config.settings.production
+      - key: DJANGO_SECRET_KEY
+        generateValue: true # Render generates and stores it; never in the repo
+      - key: DATABASE_URL
+        sync: false # set by hand in the dashboard: the Neon URL
+      - key: CORS_ALLOWED_ORIGINS
+        sync: false # set to the static site's URL once it exists
+      - key: DJANGO_ALLOWED_HOSTS
+        value: .onrender.com
+
+  - type: web
+    name: vacancy-max
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm ci && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      - key: VITE_API_URL
+        sync: false # set to the API service's URL once it exists
+    routes:
+      # Single-page app: unknown paths are handled by the client, not 404s.
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    headers:
+      - path: /assets/*
+        name: Cache-Control
+        value: public, max-age=31536000, immutable

@@ -8,7 +8,8 @@ type Props = { plan: Plan };
 export function PlanActions({ plan }: Props) {
   const [copied, setCopied] = useState(false);
 
-  const calendarUrl = `/api/v1/optimizer/plan.ics?days=${plan.budget}&year=${plan.year}`;
+  const apiOrigin = import.meta.env.VITE_API_URL ?? '';
+  const calendarUrl = `${apiOrigin}/api/v1/optimizer/plan.ics?days=${plan.budget}&year=${plan.year}`;
   const shareUrl = `${window.location.origin}${window.location.pathname}?days=${plan.budget}`;
 
   async function copy() {

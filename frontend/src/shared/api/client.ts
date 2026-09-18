@@ -6,7 +6,12 @@
  * type: if the backend changes, the build should break, not production.
  */
 
-const BASE_URL = '/api/v1';
+/**
+ * Same-origin in development (Vite proxies /api to Django), and an absolute URL
+ * in production, where the static site and the API are separate Render
+ * services. VITE_API_URL is baked in at build time.
+ */
+const BASE_URL = `${import.meta.env.VITE_API_URL ?? ''}/api/v1`;
 
 export class ApiError extends Error {
   constructor(
