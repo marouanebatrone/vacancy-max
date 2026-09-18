@@ -6,14 +6,16 @@ const MAX_DAYS = 60;
 type Props = {
   onSubmit: (days: number) => void;
   busy: boolean;
+  /** From `?days=` when the page was opened with a shared link. */
+  initialDays?: number | null;
 };
 
 /**
  * The whole input surface: one number. Year, weekends and the holiday calendar
  * are the app's job, not the user's (ADR 0002).
  */
-export function DaysForm({ onSubmit, busy }: Props) {
-  const [value, setValue] = useState(String(DEFAULT_DAYS));
+export function DaysForm({ onSubmit, busy, initialDays = null }: Props) {
+  const [value, setValue] = useState(String(initialDays ?? DEFAULT_DAYS));
 
   const days = Number(value);
   const valid = Number.isInteger(days) && days >= 0 && days <= MAX_DAYS;

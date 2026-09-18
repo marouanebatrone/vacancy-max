@@ -1,12 +1,13 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { useState } from 'react';
 
 import { useYearOverview } from '@/features/calendar/hooks/useYearOverview';
 import { YearCalendar } from '@/features/calendar/components/YearCalendar';
 import { BreakCard } from '@/features/optimizer/components/BreakCard';
 import { DaysForm } from '@/features/optimizer/components/DaysForm';
+import { PlanActions } from '@/features/optimizer/components/PlanActions';
 import { PlanHero } from '@/features/optimizer/components/PlanHero';
 import { usePlan } from '@/features/optimizer/hooks/usePlan';
+import { useShareableDays } from '@/features/optimizer/hooks/useShareableDays';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -23,7 +24,7 @@ export function App() {
 }
 
 function Planner() {
-  const [days, setDays] = useState<number | null>(null);
+  const [days, setDays] = useShareableDays();
   const plan = usePlan(days);
   const year = useYearOverview(plan.data?.year);
 
@@ -34,7 +35,7 @@ function Planner() {
         <p>Turn your leave days into the longest possible time off.</p>
       </header>
 
-      <DaysForm onSubmit={setDays} busy={plan.isFetching} />
+      <DaysForm onSubmit={setDays} busy={plan.isFetching} initialDays={days} />
 
       {plan.isError && (
         <p className="error">
@@ -48,6 +49,8 @@ function Planner() {
         <>
           <div style={{ marginTop: 20 }} />
           <PlanHero plan={plan.data} />
+
+          {plan.data.breaks.length > 0 && <PlanActions plan={plan.data} />}
 
           {plan.data.breaks.length > 0 && (
             <>

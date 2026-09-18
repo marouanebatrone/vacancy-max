@@ -271,6 +271,47 @@ button:disabled {
   letter-spacing: -0.02em;
 }
 
+/* ---------------------------------------------------------------- actions */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: var(--gap);
+}
+
+.btn {
+  font: inherit;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 11px 18px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  background: var(--leave);
+  color: #ffffff;
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: filter 0.15s ease;
+}
+
+.btn:hover {
+  filter: brightness(1.08);
+}
+
+.btn.ghost {
+  background: var(--surface);
+  color: var(--ink);
+  border-color: var(--hairline);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--leave);
+  outline-offset: 2px;
+}
+
 /* ---------------------------------------------------------------- breaks */
 .section-head {
   display: flex;

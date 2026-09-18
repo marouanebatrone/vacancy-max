@@ -64,6 +64,30 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/api/v1/optimizer/plan.ics': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Download the plan as a calendar file
+     * @description The same plan as a .ics file, ready to import into any calendar.
+     *
+     *     A GET with query parameters rather than a POST, because a download has to
+     *     be reachable from a plain link -- and because that link is itself the
+     *     shareable, re-openable form of a plan.
+     */
+    get: operations['downloadPlanCalendar'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -235,6 +259,29 @@ export interface operations {
         };
         content: {
           'application/json': components['schemas']['Plan'];
+        };
+      };
+    };
+  };
+  downloadPlanCalendar: {
+    parameters: {
+      query: {
+        days: number;
+        strategy?: string;
+        year?: number;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'text/calendar': string;
         };
       };
     };
