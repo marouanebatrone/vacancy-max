@@ -5,6 +5,7 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 api_v1 = [
     path("calendars/", include("apps.calendars.api.urls")),
     path("optimizer/", include("apps.optimizer.api.urls")),
+    path("feedback/", include("apps.feedback.api.urls")),
 ]
 
 urlpatterns = [

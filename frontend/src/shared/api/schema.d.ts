@@ -44,6 +44,30 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/api/v1/feedback/': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /**
+     * Send feedback about the planner
+     * @description Record one person's verdict on the product.
+     *
+     *     Unauthenticated by design -- asking someone to sign in before they can say
+     *     "this was useful" would collect nothing. That makes it a public write, so
+     *     it is throttled per client.
+     */
+    post: operations['submitFeedback'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/api/v1/optimizer/plan/': {
     parameters: {
       query?: never;
@@ -105,6 +129,21 @@ export interface components {
       readonly holidays: components['schemas']['HolidayRef'][];
       readonly has_estimated_holidays: boolean;
     };
+    Feedback: {
+      /** Format: uuid */
+      readonly id: string;
+    };
+    FeedbackRequestRequest: {
+      /**
+       * @description Thumbs up or down. The only required answer.
+       *
+       *     * `up` - up
+       *     * `down` - down
+       */
+      rating: components['schemas']['RatingEnum'];
+      /** @description Optional: what would you change, or what's missing? */
+      comment?: string;
+    };
     Holiday: {
       /** Format: date */
       readonly date: string;
@@ -159,6 +198,12 @@ export interface components {
       readonly longest_break: number;
       readonly has_estimated_holidays: boolean;
     };
+    /**
+     * @description * `up` - up
+     *     * `down` - down
+     * @enum {string}
+     */
+    RatingEnum: 'up' | 'down';
     /**
      * @description * `max_days_off` - max_days_off
      *     * `longest_break` - longest_break
@@ -234,6 +279,31 @@ export interface operations {
         };
         content: {
           'application/json': components['schemas']['YearOverview'];
+        };
+      };
+    };
+  };
+  submitFeedback: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['FeedbackRequestRequest'];
+        'application/x-www-form-urlencoded': components['schemas']['FeedbackRequestRequest'];
+        'multipart/form-data': components['schemas']['FeedbackRequestRequest'];
+      };
+    };
+    responses: {
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['Feedback'];
         };
       };
     };

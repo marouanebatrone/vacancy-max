@@ -535,6 +535,146 @@ button:disabled {
   background: var(--weekend);
 }
 
+/* ---------------------------------------------------------------- feedback */
+.feedback {
+  margin-top: 40px;
+}
+
+.feedback h2 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  margin: 0 0 4px;
+}
+
+.feedback .muted {
+  font-size: 0.92rem;
+  margin: 0;
+}
+
+.thumbs {
+  display: flex;
+  gap: 10px;
+  border: none;
+  padding: 0;
+  margin: 18px 0 22px;
+}
+
+.thumb {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 18px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-sm);
+  background: var(--plane);
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease;
+}
+
+.thumb span {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.thumb:hover {
+  border-color: var(--leave);
+}
+
+/* The chosen verdict is marked by border and background as well as colour. */
+.thumb.picked {
+  border-color: var(--leave);
+  background: var(--leave-soft);
+  color: var(--leave-ink);
+}
+
+/* The native control stays focusable and keyboard-navigable; only its default
+   appearance is hidden, so the label above carries the visuals. */
+.thumb input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.thumb:has(input:focus-visible) {
+  outline: 2px solid var(--leave);
+  outline-offset: 2px;
+}
+
+.suggest {
+  display: block;
+  font-size: 0.92rem;
+  font-weight: 600;
+  margin-bottom: 7px;
+}
+
+.suggest .muted {
+  font-weight: 400;
+  display: inline;
+}
+
+.feedback textarea {
+  width: 100%;
+  font: inherit;
+  font-size: 0.95rem;
+  padding: 12px 14px;
+  color: var(--ink);
+  background: var(--plane);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-sm);
+  resize: vertical;
+}
+
+.feedback textarea:focus-visible {
+  outline: 2px solid var(--leave);
+  outline-offset: 2px;
+}
+
+.feedback-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+.hint-inline {
+  font-size: 0.85rem;
+}
+
+.feedback.thanks {
+  text-align: center;
+  padding: 40px 28px;
+}
+
+.thanks-mark {
+  font-size: 2.4rem;
+  margin: 0 0 6px;
+  line-height: 1;
+}
+
+.feedback.thanks .muted {
+  max-width: 44ch;
+  margin: 8px auto 0;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* ---------------------------------------------------------------- misc */
 .muted {
   color: var(--ink-2);

@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { useYearOverview } from '@/features/calendar/hooks/useYearOverview';
+import { FeedbackSection } from '@/features/feedback/components/FeedbackSection';
 import { YearCalendar } from '@/features/calendar/components/YearCalendar';
 import { BreakCard } from '@/features/optimizer/components/BreakCard';
 import { DaysForm } from '@/features/optimizer/components/DaysForm';
@@ -79,6 +80,8 @@ function Planner() {
               )}
             </>
           )}
+
+          <FeedbackSection />
 
           <p className="footnote">
             Moroccan public holidays. Weekends are Saturday and Sunday, and a holiday landing on one

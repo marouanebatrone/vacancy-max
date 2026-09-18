@@ -41,6 +41,7 @@ LOCAL_APPS = [
     "apps.accounts",
     "apps.calendars",
     "apps.optimizer",
+    "apps.feedback",
 ]
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
@@ -106,6 +107,8 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"],
     "DEFAULT_RENDERER_CLASSES": ["rest_framework.renderers.JSONRenderer"],
     "EXCEPTION_HANDLER": "apps.common.api.exceptions.exception_handler",
+    # Feedback is a public write, so it is rate limited per client.
+    "DEFAULT_THROTTLE_RATES": {"feedback": env("FEEDBACK_THROTTLE_RATE", default="10/hour")},
 }
 
 SPECTACULAR_SETTINGS = {
