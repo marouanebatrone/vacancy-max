@@ -5,7 +5,7 @@
  * not what the backend computes -- that is covered by the API tests.
  */
 
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
@@ -137,8 +137,10 @@ describe('the planner', () => {
     expect(badges).toHaveLength(1);
     expect(badges[0]?.closest('.brk')?.textContent).toMatch(/Mawlid/);
 
-    // And exactly one line about it in the summary.
-    expect(screen.getByText(/moon sighting/i)).toBeInTheDocument();
+    // And exactly one line about it in the summary -- scoped to the hero, since
+    // the "How does it work?" section explains moon sighting too.
+    const hero = document.querySelector('.hero');
+    expect(within(hero as HTMLElement).getByText(/moon sighting/i)).toBeInTheDocument();
   });
 
   it('draws the year with the requested days marked', async () => {

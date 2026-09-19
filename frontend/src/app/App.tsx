@@ -6,6 +6,7 @@ import { YearCalendar } from '@/features/calendar/components/YearCalendar';
 import { BreakCard } from '@/features/optimizer/components/BreakCard';
 import { DaysForm } from '@/features/optimizer/components/DaysForm';
 import { PlanActions } from '@/features/optimizer/components/PlanActions';
+import { HowItWorks } from '@/features/optimizer/components/HowItWorks';
 import { PlanHero } from '@/features/optimizer/components/PlanHero';
 import { usePlan } from '@/features/optimizer/hooks/usePlan';
 import { useShareableDays } from '@/features/optimizer/hooks/useShareableDays';
@@ -80,6 +81,8 @@ function Planner() {
               )}
             </>
           )}
+
+          <HowItWorks />
 
           <FeedbackSection />
 

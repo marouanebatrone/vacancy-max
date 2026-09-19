@@ -535,6 +535,96 @@ button:disabled {
   background: var(--weekend);
 }
 
+/* ---------------------------------------------------------------- how it works */
+.how {
+  margin-top: 36px;
+  padding: 0;
+}
+
+.how summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 20px 28px;
+  font-size: 1.02rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  list-style: none;
+  border-radius: var(--radius);
+}
+
+/* Safari draws its own triangle unless this is removed. */
+.how summary::-webkit-details-marker {
+  display: none;
+}
+
+.how summary:hover {
+  color: var(--leave);
+}
+
+.how summary:focus-visible {
+  outline: 2px solid var(--leave);
+  outline-offset: -2px;
+}
+
+.how-chevron {
+  width: 9px;
+  height: 9px;
+  flex: none;
+  border-right: 2px solid var(--ink-muted);
+  border-bottom: 2px solid var(--ink-muted);
+  transform: rotate(45deg) translate(-2px, -2px);
+  transition: transform 0.18s ease;
+}
+
+.how[open] .how-chevron {
+  transform: rotate(225deg) translate(-2px, -2px);
+}
+
+.how-body {
+  padding: 0 28px 26px;
+  max-width: 62ch;
+}
+
+.how-body p,
+.how-body li {
+  color: var(--ink-2);
+  font-size: 0.95rem;
+  margin: 0 0 12px;
+}
+
+.how-body strong {
+  color: var(--ink);
+}
+
+.how-body ol {
+  padding-left: 20px;
+  margin: 0 0 12px;
+}
+
+.how-body li {
+  margin-bottom: 8px;
+}
+
+.how-caveat {
+  border-top: 1px solid var(--hairline);
+  padding-top: 14px;
+  margin-bottom: 0 !important;
+  font-size: 0.9rem !important;
+}
+
+@media (max-width: 640px) {
+  .how summary {
+    padding: 18px 22px;
+  }
+
+  .how-body {
+    padding: 0 22px 22px;
+  }
+}
+
 /* ---------------------------------------------------------------- feedback */
 .feedback {
   margin-top: 40px;
