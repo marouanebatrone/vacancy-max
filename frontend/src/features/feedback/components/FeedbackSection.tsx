@@ -23,7 +23,6 @@ export function FeedbackSection() {
   if (submit.isSuccess) {
     return (
       <section className="card feedback thanks" aria-live="polite">
-        <p className="thanks-mark">🙏</p>
         <h2>Thank you!</h2>
         <p className="muted">
           Your feedback is in. It genuinely shapes what gets built next — enjoy your time off.
@@ -49,7 +48,6 @@ export function FeedbackSection() {
               checked={rating === 'up'}
               onChange={() => setRating('up')}
             />
-            <span aria-hidden="true">👍</span>
             Liked it
           </label>
 
@@ -61,7 +59,6 @@ export function FeedbackSection() {
               checked={rating === 'down'}
               onChange={() => setRating('down')}
             />
-            <span aria-hidden="true">👎</span>
             Not really
           </label>
         </fieldset>
@@ -83,7 +80,7 @@ export function FeedbackSection() {
           <button type="submit" disabled={rating === null || submit.isPending}>
             {submit.isPending ? 'Sending…' : 'Send feedback'}
           </button>
-          {rating === null && <span className="muted hint-inline">Pick 👍 or 👎 first</span>}
+          {rating === null && <span className="muted hint-inline">Choose one first</span>}
         </div>
 
         {submit.isError && (

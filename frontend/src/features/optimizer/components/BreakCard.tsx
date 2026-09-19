@@ -24,7 +24,7 @@ export function BreakCard({ brk }: Props) {
           <>
             {' '}
             <span className="badge" title="Morocco confirms lunar dates by moon sighting">
-              ⚠ date not confirmed
+              Date not confirmed
             </span>
           </>
         )}

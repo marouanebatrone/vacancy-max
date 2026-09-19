@@ -666,11 +666,6 @@ button:disabled {
     background 0.15s ease;
 }
 
-.thumb span {
-  font-size: 1.2rem;
-  line-height: 1;
-}
-
 .thumb:hover {
   border-color: var(--leave);
 }
@@ -740,12 +735,6 @@ button:disabled {
 .feedback.thanks {
   text-align: center;
   padding: 40px 28px;
-}
-
-.thanks-mark {
-  font-size: 2.4rem;
-  margin: 0 0 6px;
-  line-height: 1;
 }
 
 .feedback.thanks .muted {

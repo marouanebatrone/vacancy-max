@@ -26,10 +26,10 @@ export function PlanActions({ plan }: Props) {
   return (
     <div className="actions">
       <a className="btn" href={calendarUrl} download={`vacancy-max-${plan.year}.ics`}>
-        📅 Add to your calendar
+        Add to your calendar
       </a>
       <button type="button" className="btn ghost" onClick={() => void copy()}>
-        {copied ? '✓ Link copied' : '🔗 Copy link'}
+        {copied ? 'Link copied' : 'Copy link'}
       </button>
     </div>
   );
